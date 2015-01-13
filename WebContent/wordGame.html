@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>แบบทดสอบ</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+        <link rel="stylesheet" href="css/HiSpeech.css" />
+        <link rel="stylesheet" href="css/my.css"/>
+    </head>
+    <body onload="init()">
+        <nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">PronouncelT</span> <span class="icon-bar"></span>
+					<span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">PronouncelT</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="index.html"><span
+							class="glyphicon glyphicon-home"></span>หน้าแรก</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false">บทเรียน<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="vowelLesson.jsp">สระ</a></li>
+							<li><a href="consonantLesson.jsp">พยัญชนะ</a></li>
+							<li><a href="wordLesson.jsp">คำ</a></li>
+						</ul></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false">แบบทดสอบ<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="wordGame.jsp">คำพยางค์เดียว</a></li>
+							<li><a href="wordsGame.html">คำหลายพยางค์</a></li>
+						</ul></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+        <div class="text-center">
+            <h3>แบบทดสอบ : คำพยางค์เดียว</h3>
+        </div>
+        <!--<div id="WebAll" class="jumbotron">
+            <div id="ALL">
+                <div>
+                    เกมหยิบของ
+                </div>
+                <div id="SoundWord">
+                    <img width="50" height="400">
+                    ลูกบอล
+                </div>
+                <div id="SaveSoundWord">
+                    <div id="ImgWordGame">
+                        <canvas id="myCanvas" width="500" height="400" style="border-style:solid;"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <button onclick="getLeft()">Go Left</button>
+                    <button onclick="getRight()">Go Right</button>
+                    <button onclick="getEnter()">Go Enter</button>
+                </div>
+                <div>
+                    <div>
+                        <img src="img/Text2.png" width="300" height="200">
+                    </div>
+                    <div id="ButtonCenter">
+                        <button>
+                            Start
+                        </button>
+                        &nbsp;
+                        <button type="submit">
+                            Check
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var fps = 1000;
+            var imgWordGame = new Image();
+            imgWordGame.src = 'img/WordGame1.1.png';
+            var imgBall1 = new Image();
+            imgBall1.src = 'img/Ball1.png';
+            var imgBall2 = new Image();
+            imgBall2.src = 'img/Ball2.png';
+            var imgBall3 = new Image();
+            imgBall3.src = 'img/Ball3.png';
+            var imgPinch = new Image();
+            imgPinch.src = 'img/Pinch.png';
+            var keyframePinch = 2;
+            var canvas = document.getElementById('myCanvas');
+            var ctxP = canvas.getContext('2d');
+
+            var posImgWordGame = {x: 0, y: 0};
+            var posBall1 = {x: (canvas.width / 2 - 50), y: canvas.height / 2 + 50};
+            var posBall2 = {x: canvas.width - 200, y: canvas.height / 2 + 50};
+            var posBall3 = {x: canvas.width - 400, y: canvas.height / 2 + 50};
+            var posPinch = {x: canvas.width - 220, y: canvas.height / 2 - 160};
+
+            var interval1;
+            var interval2;
+
+            function init() {
+                drawPinch(keyframePinch, posPinch.x, posPinch.y);
+                drawImgWordGame(posImgWordGame.x, posImgWordGame.y);
+                drawBall1(posBall1.x, posBall1.y);
+                drawBall2(posBall2.x, posBall2.y);
+                drawBall3(posBall3.x, posBall3.y);
+            }
+
+            function getLeft() {
+                interval1 = setInterval(function() {
+                    Left1();
+                }, 1000 / fps);
+            }
+
+            function Left1() {
+                ctxP.clearRect(0, 0, canvas.width, canvas.height);
+                drawPinch(keyframePinch, posPinch.x, posPinch.y);
+                drawImgWordGame(posImgWordGame.x, posImgWordGame.y);
+                drawBall1(posBall1.x, posBall1.y);
+                drawBall2(posBall2.x, posBall2.y);
+                drawBall3(posBall3.x, posBall3.y);
+                if (posPinch.x > posBall3.x) {
+                    posPinch.x--;
+                } else {
+                    if (posPinch.y < posBall3.y) {
+                        posPinch.x++;
+                    }
+                    else {
+                        if (posPinch.y !== posBall3.y) {
+                            posPinch.y++;
+                        }
+                    }
+                }
+
+                if ((posPinch.y + posPinch.height) === (posBall1.y + 30)) {
+                    clearInterval(interval1);
+                    interval2 = setInterval(function() {
+                        Left2();
+                    }, 1000 / fps);
+                }
+            }
+
+            function Left2() {
+                ctxP.clearRect(0, 0, canvas.width, canvas.height);
+                if (posPinch.y !== 0) {
+                    posPinch.y--;
+                    posBall2.y--;
+                    drawBall1(posBall1.x, posBall1.y);
+                    drawBall2(posBall2.x, posBall2.y);
+                    drawPinch(keyframePinch, posPinch.x, posPinch.y);
+                } else {
+                    drawBall1(posBall1.x, posBall1.y);
+                    drawBall2(posBall2.x, posBall2.y);
+                    drawPinch(keyframePinch, posPinch.x, posPinch.y);
+                    clearInterval(interval2);
+                }
+            }
+
+            function getRight() {
+                interval1 = setInterval(function() {
+                    Right1();
+                }, 1000 / fps);
+            }
+
+            function Right1() {
+                ctxP.clearRect(0, 0, canvas.width, canvas.height);
+                drawPinch(keyframePinch, posPinch.x, posPinch.y);
+                drawBall1(posBall1.x, posBall1.y);
+                drawBall2(posBall2.x, posBall2.y);
+                drawBall3(posBall3.x, posBall3.y);
+                if (posPinch.x > posBall1.x) {
+                    posPinch.x--;
+                } else {
+                    if (posPinch.y < posBall1.y) {
+                        posPinch.x++;
+                    }
+                    else {
+                        if (posPinch.y !== posBall1.y) {
+                            posPinch.y++;
+                        }
+                    }
+                }
+
+                if ((posPinch.y + posPinch.height) === (posBall1.y + 30)) {
+                    clearInterval(interval1);
+                    interval2 = setInterval(function() {
+                        Left2();
+                    }, 1000 / fps);
+                }
+            }
+
+            function Right2() {
+                ctxP.clearRect(0, 0, canvas.width, canvas.height);
+                drawImgWordGame(posImgWordGame.x, posImgWordGame.y);
+                if (posBall1.y !== 0) {
+                    posPinch.y--;
+                    posBall2.y--;
+                    drawImgWordGame(posImgWordGame.x, posImgWordGame.y);
+                    drawBall1(posBall1.x, posBall1.y);
+                    drawBall2(posBall2.x, posBall2.y);
+                    drawBall3(posBall3.x, posBall3.y);
+                    drawPinch(keyframePinch, posPinch.x, posPinch.y);
+                } else {
+                    drawImgWordGame(posImgWordGame.x, posImgWordGame.y);
+                    drawBall1(posBall1.x, posBall1.y);
+                    drawBall2(posBall2.x, posBall2.y);
+                    drawBall3(posBall3.x, posBall3.y);
+                    drawPinch(keyframePinch, posPinch.x, posPinch.y);
+                    clearInterval(interval2);
+                }
+            }
+
+            function getEnter() {
+                interval1 = setInterval(function() {
+                    Enter1();
+                }, 1000 / fps);
+            }
+
+            function Enter1() {
+                ctxP.clearRect(0, 0, canvas.width, canvas.height);
+                drawBall1(posBall1.x, posBall1.y);
+                drawBall2(posBall2.x, posBall2.y);
+                drawBall3(posBall3.x, posBall3.y);
+                drawPinch(keyframe, posX, posY);
+
+                if (posPinch.x !== posBall3.x) {
+                    posPinch.x--;
+                }
+                else {
+                    if (posPinch.y !== posBall3.y) {
+                        posPinch.y++;
+                    }
+                }
+
+                if ((posPinch.y + imgPinch.height) === (posall3.y + 30)) {
+                    clearInterval(interval1);
+                    interval2 = setInterval(function() {
+                        Enter2();
+                    }, 1000 / fps);
+                }
+            }
+
+            function Enter2() {
+                ctxP.clearRect(0, 0, canvas.width, canvas.height);
+                if (keyframePinch > 1) {
+                    keyframePinch--;
+                } else {
+                    keyframePinch = 0;
+                }
+            }
+
+            function drawPinch(keyframe, posX, posY) {
+                ctxP.drawImage(imgPinch, (keyframe * 250), 0, 500, 500, posX, posY, 200, 200);
+            }
+
+            function drawImgWordGame(posX, posY) {
+                ctxP.drawImage(imgWordGame, 0, 0, imgWordGame.width, imgWordGame.height, posX, posY, 500, 400);
+            }
+            function drawBall1(posX, posY) {
+                ctxP.drawImage(imgBall1, 0, 0, imgBall1.width, imgBall1.height, posX, posY, 100, 100);
+            }
+            function drawBall2(posX, posY) {
+                ctxP.drawImage(imgBall2, 0, 0, imgBall2.width, imgBall2.height, posX, posY, 100, 100);
+            }
+            function drawBall3(posX, posY) {
+                ctxP.drawImage(imgBall3, 0, 0, imgBall3.width, imgBall3.height, posX, posY, 100, 100);
+            }
+        </script>-->
+        <div class="text-center">
+        <img alt="" src="img/Waiter.png" width="450" height="500">
+        </div>
+        <script type="text/javascript" src="js/jquery-1.11.0.min.js">
+
+        </script>
+        <script type="text/javascript" src="js/bootstrap.min.js">
+
+        </script>
+        <br/>
+    </body>
+</html>
